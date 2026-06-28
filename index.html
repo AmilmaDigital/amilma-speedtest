@@ -46,8 +46,9 @@
 <!-- ── Favicons &amp; PWA ────────────────────────────────────────────── -->
 <link rel="icon" type="image/png" href="favicon.png"/>
 <link rel="apple-touch-icon" href="favicon.png"/>
-<meta name="theme-color" content="#f4f7fd"/>
-<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#f4f7fd" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#0a0e17" media="(prefers-color-scheme: dark)"/>
+<meta name="color-scheme" content="light dark"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
@@ -58,7 +59,9 @@
 <link rel="dns-prefetch" href="//ipapi.co"/>
 <link rel="preload" href="style.css?v=20260628c" as="style"/>
 <link rel="preload" href="app.js?v=20260628" as="script"/>
+<link rel="preload" href="frontend/css/security.css?v=20260628" as="style"/>
 <link rel="stylesheet" href="style.css?v=20260628c"/>
+<link rel="stylesheet" href="frontend/css/security.css?v=20260628"/>
 <link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
 
 <!-- ════════════════════════════════════════════════════════════════════════
@@ -218,10 +221,37 @@
   <button class="lang-btn" data-lang="sr" onclick="setLang('sr')">СР</button>
 </div>
 
-<!-- Actual UI -->
+<!-- Navigation Bar -->
+<div class="nav-bar" role="navigation" aria-label="Main navigation">
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-tab="speedtest">
+      <span class="nav-tab-icon">⚡</span>
+      <span class="nav-tab-text">Speed Test</span>
+    </button>
+    <button class="nav-tab" data-tab="security">
+      <span class="nav-tab-icon">🔍</span>
+      <span class="nav-tab-text">Security Audit</span>
+    </button>
+    <button class="nav-tab" data-tab="dns">
+      <span class="nav-tab-icon">🌐</span>
+      <span class="nav-tab-text">DNS Tools</span>
+    </button>
+    <button class="nav-tab" data-tab="reports">
+      <span class="nav-tab-icon">📋</span>
+      <span class="nav-tab-text">Reports</span>
+    </button>
+  </div>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  </div>
+</div>
 
+<!-- Actual UI -->
 <div class="page" id="page-wrap">
 <main id="main-content" role="main" aria-label="Amilma Network — Internet speed test and IP diagnostics">
+
+<!-- ══ TAB: SPEED TEST ══ -->
+<div class="tab-content active" id="tab-speedtest">
 
   <!-- ══ SPEED TEST ══ -->
   <div class="speedtest-zone">
@@ -778,6 +808,135 @@
   </footer>
 
   </section><!-- /lower-section -->
+</div><!-- /tab-speedtest -->
+
+<!-- ══ TAB: SECURITY AUDIT ══ -->
+<div class="tab-content" id="tab-security">
+  <div class="speedtest-zone" style="max-width:900px;margin:0 auto">
+
+    <div class="hero-section">
+      <div class="hero">
+        <div class="console-title">
+          <div class="brand-line">
+            <span class="brand-mark" aria-hidden="true"><span></span></span>
+            <h1 class="brand-name">SECURITY <em>AUDIT</em></h1>
+          </div>
+          <p class="console-tag">Cybersecurity Analysis Engine</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-card glass">
+      <div class="main-card-inner" style="padding:22px">
+
+        <!-- Input row -->
+        <div class="sec-input-row">
+          <input type="text" class="sec-input" id="sec-input"
+            placeholder="example.com or https://..." autocomplete="off" spellcheck="false"/>
+          <button class="sec-btn" id="sec-scan-btn">Scan</button>
+        </div>
+
+        <!-- Scan type chips -->
+        <div class="sec-type-chips">
+          <button class="sec-type-chip active" data-type="deep">🔄 Deep Scan</button>
+          <button class="sec-type-chip" data-type="url">🔗 URL</button>
+          <button class="sec-type-chip" data-type="ip">🛡️ IP Reputation</button>
+          <button class="sec-type-chip" data-type="dns">🌐 DNS</button>
+          <button class="sec-type-chip" data-type="ssl">🔒 SSL</button>
+          <button class="sec-type-chip" data-type="ports">🚪 Ports</button>
+          <button class="sec-type-chip" data-type="whois">📇 WHOIS</button>
+          <button class="sec-type-chip" data-type="file">🔑 File Hash</button>
+        </div>
+
+        <!-- Results -->
+        <div class="sec-results" id="sec-results">
+          <div class="sec-loading"><div class="sec-spinner"></div> Initializing security engine...</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="sec-quick-actions">
+      <button class="sec-quick-btn" onclick="document.getElementById('sec-input').value='amilma.net';document.querySelector('[data-type=deep]').click()">▶ Test amilma.net</button>
+      <button class="sec-quick-btn" onclick="document.getElementById('sec-input').value='1.1.1.1';document.querySelector('[data-type=deep]').click()">▶ Test 1.1.1.1</button>
+      <button class="sec-quick-btn" onclick="document.getElementById('sec-input').value='google.com';document.querySelector('[data-type=dns]').click()">▶ DNS google.com</button>
+      <button class="sec-quick-btn" onclick="document.getElementById('sec-input').value='github.com';document.querySelector('[data-type=ssl]').click()">▶ SSL github.com</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ TAB: DNS TOOLS ══ -->
+<div class="tab-content" id="tab-dns">
+  <div class="speedtest-zone" style="max-width:900px;margin:0 auto">
+
+    <div class="hero-section">
+      <div class="hero">
+        <div class="console-title">
+          <div class="brand-line">
+            <span class="brand-mark" aria-hidden="true"><span></span></span>
+            <h1 class="brand-name">DNS <em>TOOLS</em></h1>
+          </div>
+          <p class="console-tag">Domain Name System Intelligence</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-card glass">
+      <div class="main-card-inner" style="padding:22px">
+
+        <div class="sec-input-row">
+          <input type="text" class="sec-input" id="dns-input"
+            placeholder="example.com" autocomplete="off" spellcheck="false"/>
+          <button class="sec-btn" id="dns-lookup-btn">Lookup</button>
+        </div>
+
+        <div class="sec-results" id="dns-results">
+          <div class="sec-loading"><div class="sec-spinner"></div> Loading...</div>
+        </div>
+
+        <div id="dns-security"></div>
+
+      </div>
+    </div>
+
+    <div class="sec-quick-actions">
+      <button class="sec-quick-btn" onclick="document.getElementById('dns-input').value='amilma.net';document.getElementById('dns-lookup-btn').click()">amilma.net</button>
+      <button class="sec-quick-btn" onclick="document.getElementById('dns-input').value='google.com';document.getElementById('dns-lookup-btn').click()">google.com</button>
+      <button class="sec-quick-btn" onclick="document.getElementById('dns-input').value='cloudflare.com';document.getElementById('dns-lookup-btn').click()">cloudflare.com</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ TAB: REPORTS ══ -->
+<div class="tab-content" id="tab-reports">
+  <div class="speedtest-zone" style="max-width:900px;margin:0 auto">
+
+    <div class="hero-section">
+      <div class="hero">
+        <div class="console-title">
+          <div class="brand-line">
+            <span class="brand-mark" aria-hidden="true"><span></span></span>
+            <h1 class="brand-name">SCAN <em>REPORTS</em></h1>
+          </div>
+          <p class="console-tag">History & Analysis Archive</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-card glass">
+      <div class="main-card-inner" style="padding:22px">
+        <div class="sec-results" id="report-list">
+          <div class="sec-loading"><div class="sec-spinner"></div> Loading reports...</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </main>
 </div><!-- /page -->
 
@@ -785,5 +944,33 @@
      SCRIPTS
 ════════════════════════════════════ -->
 <script src="app.js?v=20260628"></script>
+<script type="module">
+import { initNavigation } from './frontend/modules/navigation.js';
+import { runScan, renderEmptyState } from './frontend/modules/security.js';
+
+window.initSecurity = function() {
+  renderEmptyState('sec-results', '🔍', 'Security Audit', 'Enter a target above to start scanning');
+};
+
+// Expose for inline onclick handlers
+window.API_BASE = 'http://localhost:3001';
+
+document.addEventListener('DOMContentLoaded', () => {
+  initNavigation();
+  // Set initial security empty state
+  renderEmptyState('sec-results', '🔍', 'Security Audit', 'Enter a target above to start scanning');
+});
+
+// Handle scanning from inline quick buttons
+window.quickScan = function(target, type) {
+  const input = document.getElementById('sec-input');
+  if (input) input.value = target;
+  const chips = document.querySelectorAll('.sec-type-chip');
+  chips.forEach(c => c.classList.remove('active'));
+  const chip = document.querySelector(`.sec-type-chip[data-type="${type}"]`);
+  if (chip) chip.classList.add('active');
+  runScan(target);
+};
+</script>
 </body>
 </html>
